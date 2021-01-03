@@ -10,15 +10,11 @@
   <img src="./image/styn-code.png">
 </p>
 
----
-
 ## Table of Contents
 
 - [Usage](#usage)
 - [Plugins](#plugins)
 - [React](#react)
-
----
 
 ## Usage
 
@@ -83,7 +79,7 @@ styn accepts plugins that interact with the styn tree, here are an example of a 
 
 > Note: "styn tree" is a very, very, very short version of an AST. It may not be the best option if you want to work with a full AST.
 
-```js
+```ts
 import { styn, StynPlugin } from "styn";
 
 const truncate: StynPlugin = (tree, walk) => {
@@ -132,7 +128,7 @@ styn comes with those built-in plugins
 - **tokenizer**
 
 ```js
-import { tokenizer } from "styn/plugins";
+import { tokenizer } from "styn";
 
 const plugins = [
   tokenizer({
