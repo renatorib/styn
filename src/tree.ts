@@ -1,8 +1,8 @@
 // Hey, hi! You can see an example of tree in the test file.
 
-type Keyword = string;
-type Selector = string;
-type Declarations = { [property: string]: number | string };
+export type Keyword = string;
+export type Selector = string;
+export type Declarations = { [property: string]: number | string | Declarations };
 
 export type Rule = {
   type: "rule";
@@ -52,8 +52,10 @@ export const stringify = (tree: StynTree) => {
         .map((property) => {
           const prop = normalizeProp(property);
           const value = declarations[property];
+          if (typeof value === "object") return undefined;
           return linewrap(i(`${prop}: ${value};`, _i + 2));
         })
+        .filter(Boolean)
         .join(""),
       _i
     );
@@ -72,8 +74,8 @@ export const stringify = (tree: StynTree) => {
       const declarations = stringifyDeclarations(atRule.declarations, _i);
       return linewrap(i(`${keyword}${values} ${declarations}`, _i));
     } else if (atRule.rules) {
-      const rules = atRule.rules.map((rule) => stringifyRule(rule, 2)).join("");
-      return linewrap(i(`${keyword}${values} ${block(rules)}`, _i));
+      const rules = atRule.rules.map((rule) => stringifyRule(rule, _i + 2)).join("");
+      return linewrap(i(`${keyword}${values} ${block(rules, _i)}`, _i));
     } else {
       return linewrap(i(`${keyword}${values};`, _i));
     }
@@ -91,17 +93,20 @@ export const stringify = (tree: StynTree) => {
   return join(tree.rules.map(stringifyStynRule).filter(Boolean));
 };
 
-export type StynWalk = (tree: StynTree, callback: (r: StynRule) => void) => StynTree;
+export type StynWalk = (
+  tree: StynTree,
+  callback: (r: StynRule, parent: StynRule[], index: number) => void
+) => StynTree;
 
 export const walk: StynWalk = (tree, cb) => {
   const treeCopy = { ...tree };
-  treeCopy.rules.forEach((rule) => {
-    cb(rule);
-    if (rule.type === "at-rule" && rule.rules) {
-      rule.rules.forEach((rule) => {
-        cb(rule);
-      });
+  for (const rule of treeCopy.rules) {
+    cb(rule, treeCopy.rules, treeCopy.rules.indexOf(rule));
+    if (rule.type === "at-rule" && typeof rule.rules !== "undefined") {
+      for (const childRule of rule.rules) {
+        cb(childRule, rule.rules, rule.rules.indexOf(childRule));
+      }
     }
-  });
+  }
   return treeCopy;
 };

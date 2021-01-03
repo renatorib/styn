@@ -1,4 +1,4 @@
-import { stringify, walk } from "./tree";
+import { stringify, walk } from "../src/tree";
 
 const fullTreeOutput = `@keyframes pulse {
   0% {

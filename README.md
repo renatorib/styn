@@ -125,6 +125,49 @@ css output
 
 styn comes with those built-in plugins
 
+- **breakpoints**
+
+```js
+import { breakpoints } from "styn";
+
+const plugins = [
+  breakpoints({
+    md: "768px",
+    lg: "1024px",
+  }),
+];
+
+const { css } = styn(
+  {
+    color: "red",
+    md: {
+      color: "blue",
+    },
+    lg: {
+      color: "yellow",
+    },
+  },
+  { plugins }
+);
+
+/* css =>
+
+.styn4b5pb {
+  color: red;
+}
+@media (min-width: 768px) {
+  .styn4b5pb {
+    color: blue;
+  }
+}
+@media (min-width: 1024px) {
+  .styn4b5pb {
+    color: yellow;
+  }
+}
+*/
+```
+
 - **tokenizer**
 
 ```js
@@ -140,12 +183,15 @@ const plugins = [
 
 const { css } = styn({ color: "colors.primary" }, { plugins });
 
-// css => `.styn4b5pb { color: #123456; }`
+/* css =>
+
+.styn4b5pb {
+  color: #123456;
+}
+*/
 ```
 
 - **prefixer** (soon)
-
-- **breakpoints** (soon)
 
 ## React
 

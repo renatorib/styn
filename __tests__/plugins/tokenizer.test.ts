@@ -1,5 +1,5 @@
-import { styn } from "../styn";
-import { tokenizer } from "./tokenizer";
+import { element } from "../../src/element";
+import { tokenizer } from "../../src/plugins/tokenizer";
 
 const TOKENIZED = `.foo {
   background-color: #123456;
@@ -16,15 +16,15 @@ describe("tokenizer", () => {
       }),
     ];
 
-    const { css } = styn(
+    const { styles } = element(
       {
         backgroundColor: "primaryColor",
         borderColor: "secondaryColor",
       },
-      { selector: ".foo", plugins }
+      { className: "foo", plugins }
     );
 
-    expect(css).toBe(TOKENIZED);
+    expect(styles).toBe(TOKENIZED);
   });
 
   test("nested", () => {
@@ -39,14 +39,14 @@ describe("tokenizer", () => {
       }),
     ];
 
-    const { css } = styn(
+    const { styles } = element(
       {
         backgroundColor: "fooColors.primary",
         borderColor: "barColors.secondary",
       },
-      { selector: ".foo", plugins }
+      { className: "foo", plugins }
     );
 
-    expect(css).toBe(TOKENIZED);
+    expect(styles).toBe(TOKENIZED);
   });
 });

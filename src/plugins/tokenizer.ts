@@ -1,4 +1,4 @@
-import { StynPlugin } from "../styn";
+import { StynPlugin } from "../types";
 
 function flatten(ob: any) {
   let toReturn: any = {};
@@ -28,7 +28,7 @@ export const tokenizer = (tokens: TokenList): StynPlugin => (tree, walk) => {
     if (rule.declarations) {
       for (const property in rule.declarations) {
         const value = rule.declarations[property];
-        if (tokensFlat[value]) {
+        if (typeof value !== "object" && value in tokensFlat) {
           rule.declarations[property] = tokensFlat[value];
         }
       }
