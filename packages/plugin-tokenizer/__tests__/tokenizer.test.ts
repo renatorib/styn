@@ -1,5 +1,5 @@
-import { element } from "../../src/element";
-import { tokenizer } from "../../src/plugins/tokenizer";
+import { element } from "styn";
+import { tokenizer } from "../src/tokenizer";
 
 const TOKENIZED = `.foo {
   background-color: #123456;

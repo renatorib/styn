@@ -1,4 +1,4 @@
-import { StynPlugin } from "../types";
+import { StynPlugin } from "styn";
 
 function flatten(ob: any) {
   let toReturn: any = {};

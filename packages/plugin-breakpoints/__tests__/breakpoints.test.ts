@@ -1,5 +1,5 @@
-import { element } from "../../src/element";
-import { breakpoints } from "../../src/plugins/breakpoints";
+import { element } from "styn";
+import { breakpoints } from "../src/breakpoints";
 
 const WITHBREAKPOINTS = `.foo {
   background-color: red;

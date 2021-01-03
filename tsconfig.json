@@ -8,12 +8,15 @@
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
-    "declarationDir": "dist/types",
     "declaration": true,
     "target": "esnext",
     "module": "esnext",
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "styn": ["packages/core/src"],
+      "@styn/*": ["packages/*/src"]
+    }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "__tests__"]
 }

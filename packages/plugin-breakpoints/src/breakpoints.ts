@@ -1,5 +1,5 @@
-import { StynPlugin } from "../types";
-import { Declarations } from "../tree";
+import { StynPlugin } from "styn";
+import { Declarations } from "@styn/tree";
 
 type ScreensList = { [screen: string]: string };
 

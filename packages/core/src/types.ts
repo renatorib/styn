@@ -1,4 +1,4 @@
-import { StynTree, StynWalk } from "./tree";
+import { StynTree, StynWalk } from "@styn/tree";
 
 export type StynPlugin = (tree: StynTree, walk: StynWalk) => StynTree;
 

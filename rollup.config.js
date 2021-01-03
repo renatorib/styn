@@ -1,16 +1,18 @@
+import path from "path";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
-import pkg from "./package.json";
+
+const { LERNA_PACKAGE_NAME, LERNA_ROOT_PATH } = process.env;
+const PACKAGE_ROOT_PATH = process.cwd();
+const PKG_JSON = require(path.join(PACKAGE_ROOT_PATH, "package.json"));
 
 const extensions = [".ts"];
 
 export default {
   input: "./src/index.ts",
 
-  // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
-  // https://rollupjs.org/guide/en/#external
-  external: [],
+  external: ["styn", "@styn/tree"],
 
   plugins: [
     // Allows node_modules resolution
@@ -28,13 +30,17 @@ export default {
   ],
 
   output: [
-    {
-      file: pkg.main,
-      format: "cjs",
-    },
-    {
-      file: pkg.module,
-      format: "es",
-    },
-  ],
+    PKG_JSON.main
+      ? {
+          file: PKG_JSON.main,
+          format: "cjs",
+        }
+      : null,
+    PKG_JSON.module
+      ? {
+          file: PKG_JSON.module,
+          format: "es",
+        }
+      : null,
+  ].filter(Boolean),
 };

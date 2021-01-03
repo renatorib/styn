@@ -1,0 +1,40 @@
+{
+  "name": "@styn/plugin-breakpoints",
+  "version": "0.1.0",
+  "description": "Create breakpoints to use in your styn styles",
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": "https://github.com/renatorib/styn",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "unpkg": "dist/plugin-tokenizer.min.js",
+  "types": "dist/types",
+  "author": {
+    "name": "Renato Ribeiro",
+    "email": "hi@rena.to",
+    "url": "https://github.com/renatorib"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "clean": "rm -rf dist",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "rollup -c",
+    "build": "yarn clean && yarn build:types && yarn build:js",
+    "test": "jest"
+  },
+  "keywords": [
+    "styn",
+    "styn-plugin",
+    "styn-tokenizer",
+    "style",
+    "styling",
+    "css",
+    "css-in-js"
+  ],
+  "dependencies": {},
+  "peerDependencies": {
+    "styn": "^0.1.0"
+  },
+  "devDependencies": {}
+}

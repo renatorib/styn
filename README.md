@@ -13,17 +13,75 @@
 ## Table of Contents
 
 - [Usage](#usage)
+- - [CSS](#css)
+- - [Element](#element)
 - [Plugins](#plugins)
 - [React](#react)
 
 ## Usage
 
-### Basic
+### CSS
 
 ```js
-import { styn } from "styn";
+import { css } from "styn";
 
-const { selector, css } = styn({
+const styles = css({
+  ".foo": {
+    backgroundColor: "red",
+    "&:hover": {
+      backgroundColor: "blue",
+    },
+  },
+  ".bar": {
+    color: "yellow",
+  },
+});
+```
+
+**Outputs to:**
+
+styles
+
+```css
+.foo {
+  background-color: red;
+}
+.foo:hover {
+  background-color: blue;
+}
+.bar {
+  color: yellow;
+}
+```
+
+**css** also accepts at-rules like @keyframes, @font-face, etc.
+
+```js
+import { css } from "styn";
+
+const styles = css({
+  "@keyframes pulse": {
+    from: {
+      backgroundColor: "red",
+    },
+    to: {
+      backgroundColor: "blue",
+    },
+  },
+  ".foo": {
+    animationName: "pulse",
+  },
+});
+```
+
+### Element
+
+You can create a scoped element (omit className option to generated one)
+
+```js
+import { element } from "styn";
+
+const { className, styles } = element({
   backgroundColor: "red",
   "&:hover": {
     backgroundColor: "blue",
@@ -33,9 +91,9 @@ const { selector, css } = styn({
 
 **Outputs to:**
 
-selector: `'.styn4b5pb'` (generated class name)
+className: `'styn4b5pb'`
 
-css:
+styles:
 
 ```css
 .styn4b5pb {
@@ -46,41 +104,18 @@ css:
 }
 ```
 
-### Opt-out auto generated class name
-
-```js
-import { styn } from "styn";
-
-const { selector, css } = styn(
-  {
-    backgroundColor: "red",
-    "&:hover": {
-      backgroundColor: "blue",
-    },
-  },
-  {
-    selector: ".box",
-  }
-);
-```
-
-```css
-.box {
-  background-color: red;
-}
-.box:hover {
-  background-color: blue;
-}
-```
-
 ## Plugins
 
-styn accepts plugins that interact with the styn tree, here are an example of a plugin that accept a new `truncate` property that converts to three new properties (`white-space`, `overflow` and `text-overflow`)
+**styn** accepts plugins that interact with the styn tree.
+
+Both `css` and `element` accept plugins.
+
+Here are an example of a plugin that accept a new `truncate` property that converts to three new properties (`white-space`, `overflow` and `text-overflow`)
 
 > Note: "styn tree" is a very, very, very short version of an AST. It may not be the best option if you want to work with a full AST.
 
 ```ts
-import { styn, StynPlugin } from "styn";
+import { element, StynPlugin } from "styn";
 
 const truncate: StynPlugin = (tree, walk) => {
   return walk(tree, (rule) => {
@@ -97,7 +132,7 @@ const truncate: StynPlugin = (tree, walk) => {
   });
 };
 
-const { css } = styn(
+const { styles } = element(
   {
     width: "350px",
     padding: "20px",
@@ -109,7 +144,7 @@ const { css } = styn(
 );
 ```
 
-css output
+**styles output:**
 
 ```css
 .styn4b5pb {
@@ -121,14 +156,13 @@ css output
 }
 ```
 
-### Built-in plugins
+### List of plugins
 
-styn comes with those built-in plugins
-
-- **breakpoints**
+- **@styn/plugin-breakpoints**
 
 ```js
-import { breakpoints } from "styn";
+import { element } from "styn";
+import { breakpoints } from "@styn/plugin-breakpoints";
 
 const plugins = [
   breakpoints({
@@ -137,7 +171,7 @@ const plugins = [
   }),
 ];
 
-const { css } = styn(
+const { styles } = element(
   {
     color: "red",
     md: {
@@ -168,10 +202,11 @@ const { css } = styn(
 */
 ```
 
-- **tokenizer**
+- **@styn/plugin-tokenizer**
 
 ```js
-import { tokenizer } from "styn";
+import { element } from "styn";
+import { tokenizer } from "@styn/plugin-tokenizer";
 
 const plugins = [
   tokenizer({
@@ -181,7 +216,12 @@ const plugins = [
   }),
 ];
 
-const { css } = styn({ color: "colors.primary" }, { plugins });
+const { styles } = element(
+  {
+    color: "colors.primary",
+  },
+  { plugins }
+);
 
 /* css =>
 
@@ -191,7 +231,7 @@ const { css } = styn({ color: "colors.primary" }, { plugins });
 */
 ```
 
-- **prefixer** (soon)
+- **@styn/plugin-tokenizer** (soon)
 
 ## React
 

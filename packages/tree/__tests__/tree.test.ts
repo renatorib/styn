@@ -1,4 +1,4 @@
-import { stringify, walk } from "../src/tree";
+import { stringify, parse, walk } from "../src/tree";
 
 const fullTreeOutput = `@keyframes pulse {
   0% {
@@ -40,6 +40,31 @@ const fullTreeOutput = `@keyframes pulse {
   }
 }
 `;
+const fullParseAndStringify = `@unknown value;
+@charset "utf-8";
+@font-face {
+  font-family: "FontName";
+  src: url(../fonts/font-name.woff);
+}
+@keyframes pulse {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: blue;
+  }
+}
+.foo {
+  height: 100px;
+  animation-name: pulse;
+  animation-duration: 2s;
+}
+@media (min-width: 768px) {
+  .foo {
+    height: 200px;
+  }
+}
+`;
 
 const replacedOutput = `.foo {
   color: red;
@@ -52,6 +77,7 @@ const replacedOutput = `.foo {
 describe("tree", () => {
   test("stringify", () => {
     const css = stringify({
+      meta: {},
       rules: [
         {
           type: "at-rule" as const,
@@ -154,8 +180,106 @@ describe("tree", () => {
     expect(css).toBe(fullTreeOutput);
   });
 
+  test("parse & stringify", () => {
+    const tree = parse({
+      "@unknown": "value",
+      "@charset": '"utf-8"',
+      "@font-face": {
+        fontFamily: '"FontName"',
+        src: "url(../fonts/font-name.woff)",
+      },
+      "@keyframes pulse": {
+        from: {
+          backgroundColor: "red",
+        },
+        to: {
+          backgroundColor: "blue",
+        },
+      },
+      ".foo": {
+        height: "100px",
+        animationName: "pulse",
+        animationDuration: "2s",
+      },
+      "@media (min-width: 768px)": {
+        ".foo": {
+          height: "200px",
+        },
+      },
+    });
+
+    expect(tree).toMatchObject({
+      rules: [
+        {
+          type: "at-rule",
+          keyword: "@unknown",
+          values: ["value"],
+        },
+        {
+          type: "at-rule",
+          keyword: "@charset",
+          values: ['"utf-8"'],
+        },
+        {
+          type: "at-rule",
+          keyword: "@font-face",
+          declarations: {
+            fontFamily: '"FontName"',
+            src: "url(../fonts/font-name.woff)",
+          },
+        },
+        {
+          type: "at-rule",
+          keyword: "@keyframes pulse",
+          rules: [
+            {
+              type: "rule",
+              selector: "from",
+              declarations: {
+                backgroundColor: "red",
+              },
+            },
+            {
+              type: "rule",
+              selector: "to",
+              declarations: {
+                backgroundColor: "blue",
+              },
+            },
+          ],
+        },
+        {
+          type: "rule",
+          selector: ".foo",
+          declarations: {
+            height: "100px",
+            animationName: "pulse",
+            animationDuration: "2s",
+          },
+        },
+        {
+          type: "at-rule",
+          keyword: "@media (min-width: 768px)",
+          rules: [
+            {
+              type: "rule",
+              selector: ".foo",
+              declarations: {
+                height: "200px",
+              },
+            },
+          ],
+        },
+      ],
+      meta: {},
+    });
+
+    expect(stringify(tree)).toBe(fullParseAndStringify);
+  });
+
   test("walk", () => {
     const tree = {
+      meta: {},
       rules: [
         {
           type: "rule" as const,

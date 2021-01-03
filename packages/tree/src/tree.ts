@@ -22,6 +22,10 @@ export type StynRule = Rule | AtRule;
 
 export type StynTree = {
   rules: StynRule[];
+  meta: {
+    [k: string]: any;
+    [k: number]: any;
+  };
 };
 
 const i = (content: string, count: number) => `${" ".repeat(count)}${content}`; // indentation
@@ -91,6 +95,48 @@ export const stringify = (tree: StynTree) => {
   };
 
   return join(tree.rules.map(stringifyStynRule).filter(Boolean));
+};
+
+export const parse = (object: { [k: string]: any }): StynTree => {
+  const rules: StynRule[] = [];
+
+  for (const prop in object) {
+    const value = object[prop];
+    if (prop.startsWith("@")) {
+      // Handle at-rules
+      const atRule: AtRule = {
+        type: "at-rule",
+        keyword: prop,
+      };
+      if (prop.startsWith("@font-face")) {
+        // Handle at-rules with declarations
+        atRule.declarations = value;
+      } else if (typeof value === "object") {
+        // Handle at-rules with selectors (rules)
+        atRule.rules = [];
+        for (const selector in value) {
+          atRule.rules.push({
+            type: "rule",
+            selector,
+            declarations: value[selector],
+          });
+        }
+      } else if (typeof value === "string") {
+        atRule.values = [value];
+      }
+      rules.push(atRule);
+    } else {
+      // Handle normal rules
+      const rule: Rule = {
+        type: "rule",
+        selector: prop,
+        declarations: value,
+      };
+      rules.push(rule);
+    }
+  }
+
+  return { rules, meta: {} };
 };
 
 export type StynWalk = (
