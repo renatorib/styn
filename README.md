@@ -145,6 +145,13 @@ const { css } = styn({ color: "colors.primary" }, { plugins });
 
 - **prefixer** (soon)
 
+- **breakpoints** (soon)
+
 ## React
 
 soon
+
+## Contribute
+
+You can help improving this project sending PRs and helping with issues.
+Also you can ping me at [Twitter](https://twitter.com/renatorib_)
