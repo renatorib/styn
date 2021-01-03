@@ -1,5 +1,5 @@
 {
-  "name": "@styn/core",
+  "name": "styn",
   "version": "0.1.0",
   "description": "...",
   "sideEffects": false,
@@ -31,6 +31,7 @@
     "css-in-js"
   ],
   "dependencies": {
+    "@styn/core": "^0.1.0",
     "@styn/tree": "^0.1.0"
   },
   "peerDependencies": {},

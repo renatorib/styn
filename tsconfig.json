@@ -14,7 +14,7 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "styn": ["packages/core/src"],
+      "styn": ["packages/styn/src"],
       "@styn/*": ["packages/*/src"]
     }
   },
