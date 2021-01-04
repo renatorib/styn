@@ -22,7 +22,7 @@ export type StynElementFn = (
 ) => StynElementReturn;
 
 export const element: StynElementFn = (object, options = {}) => {
-  const className = options.className ?? genHash(options.prefix ?? "");
+  const className = options.className ?? genHash(options.prefix ?? "styn");
 
   return {
     className,
