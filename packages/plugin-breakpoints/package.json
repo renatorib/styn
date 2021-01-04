@@ -9,6 +9,9 @@
   "module": "dist/index.es.js",
   "unpkg": "dist/plugin-tokenizer.min.js",
   "types": "dist/types",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": {
     "name": "Renato Ribeiro",
     "email": "hi@rena.to",
@@ -34,5 +37,6 @@
   ],
   "peerDependencies": {
     "styn": "^0.1.0"
-  }
+  },
+  "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"
 }

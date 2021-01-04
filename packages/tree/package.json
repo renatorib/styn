@@ -9,6 +9,9 @@
   "module": "dist/index.es.js",
   "unpkg": "dist/tree.min.js",
   "types": "dist/types",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": {
     "name": "Renato Ribeiro",
     "email": "hi@rena.to",
@@ -31,5 +34,6 @@
     "styling",
     "css",
     "css-in-js"
-  ]
+  ],
+  "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"
 }
