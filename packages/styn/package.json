@@ -1,6 +1,6 @@
 {
   "name": "styn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "...",
   "sideEffects": false,
   "license": "MIT",
@@ -34,8 +34,8 @@
     "css-in-js"
   ],
   "dependencies": {
-    "@styn/core": "^0.1.0",
-    "@styn/tree": "^0.1.0"
+    "@styn/core": "^0.1.1",
+    "@styn/tree": "^0.1.1"
   },
   "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"
 }
