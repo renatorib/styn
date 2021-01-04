@@ -1,6 +1,6 @@
 {
   "name": "@styn/plugin-tokenizer",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Create tokens to use in your styn styles",
   "sideEffects": false,
   "license": "MIT",

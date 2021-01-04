@@ -26,6 +26,7 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
+    "release": "yarn test && yarn type-check && yarn build && lerna publish",
     "bootstrap": "lerna bootstrap",
     "type-check": "lerna exec yarn type-check",
     "build": "lerna exec yarn build",
