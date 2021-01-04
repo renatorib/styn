@@ -1,6 +1,6 @@
 {
   "name": "@styn/tree",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Styn Tree",
   "sideEffects": false,
   "license": "MIT",
@@ -31,8 +31,5 @@
     "styling",
     "css",
     "css-in-js"
-  ],
-  "dependencies": {},
-  "peerDependencies": {},
-  "devDependencies": {}
+  ]
 }

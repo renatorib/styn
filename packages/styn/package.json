@@ -1,6 +1,6 @@
 {
   "name": "styn",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "...",
   "sideEffects": false,
   "license": "MIT",
@@ -33,7 +33,5 @@
   "dependencies": {
     "@styn/core": "^0.1.0",
     "@styn/tree": "^0.1.0"
-  },
-  "peerDependencies": {},
-  "devDependencies": {}
+  }
 }
