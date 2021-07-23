@@ -6,10 +6,6 @@
 <strong>styn</strong> is a small, zero-dependency, extensible, js object to css generator
 </p>
 
-<p align="center">
-  <img src="./image/styn-code.png">
-</p>
-
 ## Table of Contents
 
 - [Usage](#usage)
