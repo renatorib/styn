@@ -36,7 +36,7 @@
     "css-in-js"
   ],
   "peerDependencies": {
-    "styn": "^0.1.0"
+    "styn": "^0.1.2"
   },
   "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"
 }

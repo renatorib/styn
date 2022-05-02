@@ -34,7 +34,7 @@
     "css-in-js"
   ],
   "dependencies": {
-    "@styn/core": "^0.1.2",
+    "@styn/css": "^0.1.2",
     "@styn/tree": "^0.1.1"
   },
   "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"

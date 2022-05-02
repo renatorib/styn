@@ -100,6 +100,9 @@ export const stringify = (tree: StynTree) => {
 export const parse = (object: { [k: string]: any }): StynTree => {
   const rules: StynRule[] = [];
 
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  console.log(object);
+
   for (const prop in object) {
     const value = object[prop];
     if (prop.startsWith("@")) {

@@ -1,5 +1,5 @@
 import { StynPlugin } from "../src/types";
-import { element } from "../src/element";
+import { createElement, element } from "../src/element";
 
 const BASIC1 = (className: string) => `.${className} {
   background-color: red;
@@ -25,6 +25,21 @@ const PLUGIN1 = (className: string) => `.${className} {
   text-overflow: ellipsis;
 }
 `;
+
+const truncate: StynPlugin = (tree, walk) => {
+  return walk(tree, (rule) => {
+    if (rule.declarations) {
+      for (const property in rule.declarations) {
+        if (property === "truncate") {
+          delete rule.declarations.truncate;
+          rule.declarations.whiteSpace = "nowrap";
+          rule.declarations.overflow = "hidden";
+          rule.declarations.textOverflow = "ellipsis";
+        }
+      }
+    }
+  });
+};
 
 describe("element", () => {
   test("single property", () => {
@@ -78,21 +93,6 @@ describe("element", () => {
   });
 
   test("custom plugins", () => {
-    const truncate: StynPlugin = (tree, walk) => {
-      return walk(tree, (rule) => {
-        if (rule.declarations) {
-          for (const property in rule.declarations) {
-            if (property === "truncate") {
-              delete rule.declarations.truncate;
-              rule.declarations.whiteSpace = "nowrap";
-              rule.declarations.overflow = "hidden";
-              rule.declarations.textOverflow = "ellipsis";
-            }
-          }
-        }
-      });
-    };
-
     const { className, styles } = element(
       {
         width: "350px",
@@ -103,6 +103,19 @@ describe("element", () => {
         plugins: [truncate],
       }
     );
+
+    expect(styles).toBe(PLUGIN1(className));
+  });
+});
+
+describe("createElement", () => {
+  test("custom plugins", () => {
+    const element = createElement({ plugins: [truncate] });
+    const { className, styles } = element({
+      width: "350px",
+      padding: "20px",
+      truncate: true,
+    });
 
     expect(styles).toBe(PLUGIN1(className));
   });

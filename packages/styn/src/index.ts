@@ -1,2 +1,2 @@
-export * from "@styn/core";
+export * from "@styn/css";
 export * from "@styn/tree";

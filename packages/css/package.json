@@ -1,13 +1,13 @@
 {
-  "name": "@styn/plugin-tokenizer",
-  "version": "0.1.1",
-  "description": "Create tokens to use in your styn styles",
+  "name": "@styn/css",
+  "version": "0.1.2",
+  "description": "...",
   "sideEffects": false,
   "license": "MIT",
   "repository": "https://github.com/renatorib/styn",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "unpkg": "dist/plugin-tokenizer.min.js",
+  "unpkg": "dist/styn.min.js",
   "types": "dist/types",
   "publishConfig": {
     "access": "public"
@@ -28,15 +28,13 @@
   },
   "keywords": [
     "styn",
-    "styn-plugin",
-    "styn-tokenizer",
     "style",
     "styling",
     "css",
     "css-in-js"
   ],
-  "peerDependencies": {
-    "styn": "^0.1.2"
+  "dependencies": {
+    "@styn/tree": "^0.1.1"
   },
   "gitHead": "1172e6bfc002fedaddc823f0be350ea32f4e94ab"
 }
